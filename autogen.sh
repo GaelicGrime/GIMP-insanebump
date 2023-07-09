@@ -1,4 +1,4 @@
-2#!/bin/sh
+#!/bin/sh
 
 # This script does all the magic calls to automake/autoconf and
 # friends that are needed to configure a cvs checkout.  You need a
@@ -13,7 +13,7 @@ TEST_TYPE=-f
 FILE=src/render.c
 
 AUTOCONF_REQUIRED_VERSION=2.54
-AUTOMAKE_REQUIRED_VERSION=1.6
+AUTOMAKE_REQUIRED_VERSION=1.16
 GLIB_REQUIRED_VERSION=2.0.0
 INTLTOOL_REQUIRED_VERSION=0.17
 
@@ -33,7 +33,7 @@ check_version ()
 }
 
 echo
-echo "I am testing that you have the required versions of autoconf," 
+echo "I am testing that you have the required versions of autoconf,"
 echo "automake, glib-gettextize and intltoolize..."
 echo
 
@@ -65,6 +65,9 @@ elif (automake-1.9 --version) < /dev/null > /dev/null 2>&1; then
 elif (automake-1.6 --version) < /dev/null > /dev/null 2>&1; then
    AUTOMAKE=automake-1.6
    ACLOCAL=aclocal-1.6
+elif (automake-1.16 --version) < /dev/null > /dev/null 2>&1; then
+   AUTOMAKE=automake-1.16
+   ACLOCAL=aclocal-1.16
 else
     echo
     echo "  You must have automake 1.6 or newer installed to compile $PROJECT."
@@ -108,17 +111,18 @@ fi
 if test "$DIE" -eq 1; then
     echo
     echo "Please install/upgrade the missing tools and call me again."
-    echo	
+    echo
     exit 1
 fi
 
 
-test $TEST_TYPE $FILE || {
-    echo
-    echo "You must run this script in the top-level $PROJECT directory."
-    echo
-    exit 1
-}
+#test $TEST_TYPE $FILE || {
+#    echo
+#    echo "testing $TEST_TYPE $FILE"
+#    echo "You must run this script in the top-level $PROJECT directory."
+#    echo
+#    exit 1
+#}
 
 
 echo
